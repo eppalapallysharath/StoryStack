@@ -1,0 +1,1 @@
+export const baseurl = "https://storystack-backend.onrender.com"

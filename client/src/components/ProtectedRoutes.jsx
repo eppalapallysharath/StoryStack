@@ -6,7 +6,7 @@ import { PageNotFound } from "../pages/PageNotFound";
 import { AuthorNavbar } from "../author/navbar";
 import { AdminNavbar } from "../admin/navbar";
 export const ProtectedRoutes = ({ user }) => {
-  if (user.role === "author") {
+  if (user.role === "AUTHOR") {
     return (
       <>
         <AuthorNavbar />
@@ -16,7 +16,7 @@ export const ProtectedRoutes = ({ user }) => {
         </Routes>
       </>
     );
-  } else if (user.role === "admin") {
+  } else if (user.role === "ADMIN") {
     return (
       <>
         <AdminNavbar />
