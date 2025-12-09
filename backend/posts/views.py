@@ -119,6 +119,18 @@ def pending_posts(request):
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def get_pending_post(request, postId):
+    try:
+        post = Post.objects.get(id=postId, status='PENDING')
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Post.DoesNotExist:
+        return Response({
+            'message': 'Pending post not found'
+        }, status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def update_post_status(request, postId):
