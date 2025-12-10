@@ -7,7 +7,7 @@ import { authContext } from './context/authContext'
 export const App = () => {
   const checkAuth = ( JSON.parse(localStorage.getItem("auth") )|| {isLogin: false , user:{},token:null}) 
   const [auth, setAuth] = useState(checkAuth)
-  console.log(auth)
+  // console.log(auth)
   useEffect(()=>{
     localStorage.setItem("auth", JSON.stringify(auth))
   },[auth])

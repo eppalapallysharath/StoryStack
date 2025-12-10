@@ -1,7 +1,10 @@
 import React from 'react'
+import { Blogs } from '../components/Blogs'
 
 export const HomePage = () => {
   return (
-    <div>Author HomePage</div>
+    <div>
+      <Blogs/>
+    </div>
   )
 }
