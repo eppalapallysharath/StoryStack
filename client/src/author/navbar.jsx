@@ -13,7 +13,9 @@ export const AuthorNavbar = () => {
   const navigate = useNavigate()  
   const logout = () =>{
       setAuth({isLogin: false , user:{},token:null})
+      navigate("/")
     }
+
 
   return (
     <div>
@@ -25,8 +27,9 @@ export const AuthorNavbar = () => {
           <Nav className="me-auto">
           <NavLink to={"/"}>Home</NavLink>
           <NavLink to={'/writeblog'} >Write Blogs</NavLink>
-          <NavLink >MyBlogs</NavLink>
+          <NavLink to={"/myblogs"}>MyBlogs</NavLink>
           </Nav>
+          <Button variant='warning' size='sm' onClick={logout}>Logout</Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

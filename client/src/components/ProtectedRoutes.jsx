@@ -9,6 +9,11 @@ import { Blog } from "./blog";
 import { Writeblog } from "../author/writeblog";
 import { MyBlogs } from "../author/myblogs";
 import { MyBlog } from "../author/myblog";
+import { EditBlog } from "../author/EditBlog";
+import { Users } from "../admin/Users";
+import { PendingBlogs } from "../admin/PendingBlogs";
+import { PendingBlog } from "../admin/PendingBlog";
+
 export const ProtectedRoutes = ({ user }) => {
   if (user.role === "AUTHOR") {
     return (
@@ -20,6 +25,7 @@ export const ProtectedRoutes = ({ user }) => {
           <Route path="/writeblog" element={<Writeblog/>} />
           <Route path="/myblogs" element = {<MyBlogs/>} />
           <Route path="/myblog/:id" element = {<MyBlog/>} />
+          <Route path="/editblog/:id" element ={<EditBlog/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </>
@@ -30,6 +36,10 @@ export const ProtectedRoutes = ({ user }) => {
         <AdminNavbar />
         <Routes>
           <Route path="/" element={<AdminHomePage />} />
+          <Route path="/admin/users" element={<Users/>} />
+          <Route path="/admin/pendingblogs" element={<PendingBlogs/>} />
+          <Route path="/admin/pendingblogs" element={<PendingBlogs/>} />
+          <Route path="/admin/pendingblog/:id" element={<PendingBlog/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </>
