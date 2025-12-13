@@ -5,6 +5,7 @@ import { baseurl } from "../constants/apiurl";
 import { toast } from "react-toastify";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
 
 export const MyBlog = () => {
   const { id } = useParams();
@@ -58,7 +59,19 @@ export const MyBlog = () => {
         <Card>
           <Card.Header>
             <Card.Title>
-              {data.title} <Button variant="dark" onClick={()=>navigate("/editblog/"+data.id, {state:data})}>Edit</Button>
+              {data.title} 
+              <span>
+                {data.status === "PENDING" && (
+                  <Badge bg="warning">{data.status}</Badge>
+                )}{" "}
+                {data.status === "ACCEPTED" && (
+                  <Badge bg="success">{data.status}</Badge>
+                )}
+                {data.status === "REJECTED" && (
+                  <Badge bg="danger">{data.status}</Badge>
+                )}
+              </span>
+              <Button variant="dark" onClick={()=>navigate("/editblog/"+data.id, {state:data})}>Edit</Button>
               <Button variant="danger" onClick={()=>deleteBlog(data.id)}>
                 Delete
               </Button>

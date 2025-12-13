@@ -38,7 +38,6 @@ export const ProtectedRoutes = ({ user }) => {
           <Route path="/" element={<AdminHomePage />} />
           <Route path="/admin/users" element={<Users/>} />
           <Route path="/admin/pendingblogs" element={<PendingBlogs/>} />
-          <Route path="/admin/pendingblogs" element={<PendingBlogs/>} />
           <Route path="/admin/pendingblog/:id" element={<PendingBlog/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
