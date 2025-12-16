@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseurl } from "../constants/apiurl";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
+import { Container, Table, Button, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 export const Users = () => {
@@ -23,24 +21,35 @@ export const Users = () => {
     fetchUsers();
   }, []);
 
-
-  const changeRole = (userid,role) => {
-    axios.put(`${baseurl}/api/admin/users/${userid}/role/`, {role:role}, {headers:{Authorization:"Bearer " + token }})
-    .then(res => {toast.success(res.data.message); fetchUsers()})
-    .catch(err=> {console.log(err); toast.error(err.message)})
+  const changeRole = (userid, role) => {
+    axios
+      .put(
+        `${baseurl}/api/admin/users/${userid}/role/`,
+        { role },
+        { headers: { Authorization: "Bearer " + token } }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        fetchUsers();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
 
   return (
-    <div>
-      Users
-      <Table striped bordered hover size="sm">
-        <thead>
+    <Container className="py-4">
+      <h3 className="fw-bold mb-4">User Management</h3>
+
+      <Table bordered hover responsive className="align-middle admin-table">
+        <thead className="table-dark">
           <tr>
-            <th>User Id</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Roles</th>
-            <th>Update Actions</th>
+            <th>Current Role</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -48,44 +57,44 @@ export const Users = () => {
           {data.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
-              <td>{user.name}</td>
+              <td className="fw-semibold">{user.name}</td>
               <td>{user.email}</td>
 
               <td>
-                {/* Show current role */}
-                <div style={{ marginBottom: "10px" }}>
-                  Current Role:{" "}
-                  <span>
-                    {user.role === "AUTHOR" && (
-                      <Badge bg="success">{user.role}</Badge>
-                    )}{" "}
-                    {user.role === "ADMIN" && (
-                      <Badge bg="danger">{user.role}</Badge>
-                    )}{" "}
-                  </span>
-                  {user.role === "ADMIN" ? (
-                    <Button
-                      size="sm"
-                      variant="dark"
-                      onClick={() => changeRole( user.id,"AUTHOR")}
-                    >
-                      Change to Author
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="dark"
-                      onClick={() => changeRole(user.id,"ADMIN")}
-                    >
-                      Change to Admin
-                    </Button>
-                  )}
-                </div>
+                <Badge bg={user.role === "ADMIN" ? "danger" : "success"}>
+                  {user.role}
+                </Badge>
+              </td>
+
+              <td>
+                {user.role === "ADMIN" ? (
+                  <Button
+                    size="sm"
+                    variant="outline-secondary"
+                    onClick={() => changeRole(user.id, "AUTHOR")}
+                  >
+                    Make Author
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    variant="outline-dark"
+                    onClick={() => changeRole(user.id, "ADMIN")}
+                  >
+                    Make Admin
+                  </Button>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-    </div>
+
+      {data.length === 0 && (
+        <p className="text-muted text-center mt-4">
+          No users found.
+        </p>
+      )}
+    </Container>
   );
 };

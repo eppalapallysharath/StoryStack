@@ -1,38 +1,43 @@
-import React, { useContext, useState } from 'react'
-import Button from 'react-bootstrap/esm/Button'
+import React, { useContext } from 'react'
 import { authContext } from '../context/authContext'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Image from 'react-bootstrap/Image';
+import { Container, Nav, Navbar, Image, Button } from 'react-bootstrap'
 import logo from "../assets/images/default.png"
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'
 
 export const AuthorNavbar = () => {
-  const { setAuth} = useContext(authContext)
-  const navigate = useNavigate()  
-  const logout = () =>{
-      setAuth({isLogin: false , user:{},token:null})
-      navigate("/")
-    }
+  const { setAuth } = useContext(authContext)
+  const navigate = useNavigate()
 
+  const logout = () => {
+    setAuth({ isLogin: false, user: {}, token: null })
+    navigate("/")
+  }
 
   return (
-    <div>
-         <Navbar collapseOnSelect expand="lg"  bg="danger" data-bs-theme="primary">
+    <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
       <Container>
-        <Navbar.Brand href="#home" onClick={()=>navigate("/")}> <Image src={logo} width={"120px"} height={"100px"} /> </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav" >
-          <Nav className="me-auto">
-          <NavLink to={"/"}>Home</NavLink>
-          <NavLink to={'/writeblog'} >Write Blogs</NavLink>
-          <NavLink to={"/myblogs"}>MyBlogs</NavLink>
+        <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+          <Image src={logo} width={40} height={40} rounded />
+          <span className="ms-2 fw-bold">StoryStack</span>
+        </Navbar.Brand>
+
+        <Navbar.Toggle />
+        <Navbar.Collapse>
+          <Nav className="me-auto gap-3">
+            <NavLink className="nav-link" to="/">Home</NavLink>
+            <NavLink className="nav-link" to="/writeblog">Write</NavLink>
+            <NavLink className="nav-link" to="/myblogs">My Blogs</NavLink>
           </Nav>
-          <Button variant='warning' size='sm' onClick={logout}>Logout</Button>
+
+          <Button
+            variant="outline-warning"
+            size="sm"
+            onClick={logout}
+          >
+            Logout
+          </Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    </div>
   )
 }

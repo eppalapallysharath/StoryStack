@@ -1,70 +1,96 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { baseurl, token } from "../constants/apiurl";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Overlay from "react-bootstrap/Overlay";
-import Tooltip from "react-bootstrap/Tooltip";
-import Badge from "react-bootstrap/Badge";
+import { baseurl } from "../constants/apiurl";
+import { Container, Card, Button, Badge, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 export const PendingBlog = () => {
+  const { token } = JSON.parse(localStorage.getItem("auth"));
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [show, setShow] = useState(false);
-  const target = useRef(null);
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const fetchBlog = () => {
+    setLoading(true);
     axios
       .get(`${baseurl}/api/admin/posts/pending/${id}/`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
     fetchBlog();
   }, []);
-  
-  const changeStatus = (blogStatus) =>{
-    axios.put(`${baseurl}/api/admin/posts/${id}/status/`, {status:blogStatus}, {headers:{Authorization: `Bearer ${token}` }})
-    .then(res=>{console.log(res.data); toast.success(res.data.message+ " "+ res.data.status); navigate("/admin/pendingblogs") }).catch(err =>console.log(err))
+
+  const changeStatus = (blogStatus) => {
+    axios
+      .put(
+        `${baseurl}/api/admin/posts/${id}/status/`,
+        { status: blogStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        toast.success(res.data.message + " " + res.data.status);
+        navigate("/admin/pendingblogs");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center blog-loader">
+        <Spinner animation="border" />
+        <span className="ms-2">Loading blog for review...</span>
+      </div>
+    );
   }
 
   return (
-    <>
-      {Object.keys(data).length > 0 ? (
-        <Card>
-          <Card.Header>
-            <Card.Title>
-              <span>{data.title.toUpperCase()}</span>
-              <span>
-                 <Badge variant="success">{data.status}</Badge>
-              </span>
-              <Button ref={target} onClick={() => setShow(!show)} size="sm" variant="dark">
-                Options
+    <Container className="py-4">
+      <Card className="blog-detail-card mx-auto">
+        <Card.Body>
+          <div className="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h3 className="fw-bold mb-1">{data.title}</h3>
+              <Badge bg="warning">{data.status}</Badge>
+            </div>
+
+            <div className="d-flex gap-2">
+              <Button
+                size="sm"
+                variant="success"
+                onClick={() => changeStatus("APPROVED")}
+              >
+                Approve
               </Button>
-              <Overlay target={target.current} show={show} placement="right" >
-                {(props) => (
-                  <Tooltip id="overlay-example" {...props}>
-                    <Button variant="success" size="sm" onClick={()=>changeStatus("APPROVED")}>Approved</Button>
-                    <hr/>
-                    <Button variant="danger" size="sm" onClick={()=>changeStatus("REJECTED")}>Rejected</Button>
-                  </Tooltip>
-                )}
-              </Overlay>
-            </Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Card.Text>{data.content}</Card.Text>
-          </Card.Body>
-        </Card>
-      ) : (
-        <h3 className="text-center">Loading....</h3>
-      )}
-    </>
+
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => changeStatus("REJECTED")}
+              >
+                Reject
+              </Button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="blog-content-full">
+            {data.content}
+          </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };

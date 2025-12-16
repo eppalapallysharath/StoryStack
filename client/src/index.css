@@ -1,7 +1,151 @@
-a{
+/* a{
     color: black !important;
     text-decoration: none !important;
     margin: 0 3rem;
     font-size: larger;
     font-weight: bold;
+} */
+.hero-section {
+  background: linear-gradient(to right, #141e30, #243b55);
+  padding: 80px 0;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.page-container {
+  padding: 20px;
+  min-height: 80vh;
+}
+
+/* Blog Cards */
+.blog-card {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.blog-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nav-link {
+  color: #ccc !important;
+}
+
+.nav-link.active {
+  color: #fff !important;
+  font-weight: 600;
+  border-bottom: 2px solid #ffc107;
+}
+.editor-card {
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.blog-detail-card {
+  max-width: 900px;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.blog-content-full {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.blog-loader {
+  min-height: 70vh;
+  font-size: 1.1rem;
+}
+.myblog-card {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.myblog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.blog-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.blog-detail-card {
+  max-width: 900px;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.blog-content-full {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.blog-loader {
+  min-height: 70vh;
+  font-size: 1.1rem;
+}
+
+.notfound-container {
+  min-height: 70vh;
+  text-align: center;
+}
+.nav-link {
+  color: #ccc !important;
+}
+
+.nav-link.active {
+  color: #fff !important;
+  font-weight: 600;
+  border-bottom: 2px solid #ffc107;
+}
+
+.admin-card {
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.admin-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  vertical-align: middle;
+}
+
+.admin-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.blog-detail-card {
+  max-width: 900px;
+  border-radius: 12px;
+}
+
+.blog-content-full {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.blog-loader {
+  min-height: 70vh;
 }
